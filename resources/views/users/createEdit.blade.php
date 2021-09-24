@@ -33,7 +33,7 @@
                                 Femenino
                                 <input type="radio" name="sex" value="f"
                                     @if(isset($userRole))
-                                        @if($userRole->sex === 'f') checked @endif
+                                        @if($userRole->employee->sex === 'f') checked @endif
                                     @endif
                                 >
                             </label>
