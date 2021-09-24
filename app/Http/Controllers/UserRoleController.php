@@ -95,13 +95,13 @@ class UserRoleController extends Controller
             '_token', 'send', '_method', 'password', 'role_id', 'start_date', 'final_date'
         ]));
 
-        $userRole->update([
-            'employee_id' => $userRole->employee->id,
-            'role_id' => $request->role_id,
-            'password' => Hash::make($request->password),
-            'start_date' => $request->start_date,
-            'final_date' => $request->final_date
-        ]);
+        $userRole->update(
+            array_merge(
+                ['employee_id' => $userRole->employee->id],
+                $request->only(['password', 'role_id', 'start_date', 'final_date'])
+            )
+        );
+
         return redirect()->route('userRoles.index')->with('success', 'Empleado actualizado correctamente');
     }
 
@@ -113,6 +113,7 @@ class UserRoleController extends Controller
      */
     public function destroy(UserRole $userRole): RedirectResponse
     {
+        $userRole->role()->delete();
         $userRole->delete();
         return redirect()->route('userRoles.index')
             ->with('success', 'Empleado eliminado correctamente')
