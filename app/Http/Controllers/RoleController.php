@@ -52,11 +52,11 @@ class RoleController extends Controller
             return redirect()->route('roles.create')->with('error', 'El nombre del rol es requerido');
 
         $role = (new Role())->create([
-            'role_name' => $request->role_name ?? ''
+            'role_name' => $request->role_name
         ]);
 
-        if($request->input('privileges') !== null) {
-            foreach ($request->input('privileges') as $privilege_id) {
+        if($request->privileges !== null) {
+            foreach ($request->privileges as $privilege_id) {
                 (new RolePrivilege())->create([
                     'role_id' => $role->id,
                     'privilege_id' => $privilege_id
@@ -89,7 +89,18 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role): RedirectResponse
     {
-        $role->update($request->all());
+        $validator = Validator::make($request->all(), [
+            'role_name' => 'required|min:2'
+        ]);
+
+        if($validator->fails())
+            return redirect()->route('roles.create')->with('error', 'El nombre del rol es requerido');
+
+        if($role->role_name !== $request->role_name)
+            $role->update($request->only(['role_name']));
+
+        $role->privileges()->sync($request->privileges);
+
         return redirect()->route('roles.index')
             ->with('success', 'Rol actualizado correctamente')
             ->with('roles', (new Role())->all());

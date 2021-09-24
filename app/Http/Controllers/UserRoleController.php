@@ -20,7 +20,7 @@ class UserRoleController extends Controller
      */
     public function index(): View {
         return view('users.index')
-            ->with('userRoles', UserRole::all());
+            ->with('userRoles', (new UserRole())->all());
     }
 
     /**
@@ -81,7 +81,7 @@ class UserRoleController extends Controller
     public function edit(UserRole $userRole): View
     {
         return view('users.createEdit')
-            ->with('roles', (new Role())->select()->whereNotIn('role_name', [$userRole->role->role_name])->get())
+            ->with('roles', (new Role())->all())
             ->with('userRole', $userRole);
     }
 
@@ -94,7 +94,18 @@ class UserRoleController extends Controller
      */
     public function update(Request $request, UserRole $userRole): RedirectResponse
     {
-        return redirect()->route('');
+        $userRole->employee->update($request->except([
+            '_token', 'send', '_method', 'password', 'role_id', 'start_date', 'final_date'
+        ]));
+
+        $userRole->update([
+            'employee_id' => $userRole->employee->id,
+            'role_id' => $request->role_id,
+            'password' => Hash::make($request->password),
+            'start_date' => $request->start_date,
+            'final_date' => $request->final_date
+        ]);
+        return redirect()->route('userRoles.index')->with('success', 'Empleado actualizado correctamente');
     }
 
     /**

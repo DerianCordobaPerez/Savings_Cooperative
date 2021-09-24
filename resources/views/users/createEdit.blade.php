@@ -7,7 +7,7 @@
 
             <div class="card bg-dark rounded shadow text-white col-8 mx-auto p-4">
 
-                <form method="POST" action="{{!isset($userRole) ? route('userRoles.store') : route('userRoles.edit', $userRole->employee->id)}}">
+                <form method="POST" action="{{!isset($userRole) ? route('userRoles.store') : route('userRoles.update', $userRole->id)}}">
 
                     @csrf
                     @if(isset($userRole))
@@ -155,9 +155,16 @@
                         </div>
                     </div>
 
-                    <button type="submit" name="send" class="btn btn-success">Registrar</button>
+                    <div class="row">
+                        <div class="d-grid gap-2 col-6 mx-auto">
+                            <button type="submit" name="send" class="btn btn-success">Guardar</button>
+                        </div>
 
-                    <a href="{{route('home')}}" class="btn btn-warning">Cancelar</a>
+                        <div class="d-grid gap-2 col-6 mx-auto">
+                            <a href="{{route('home')}}" class="btn btn-warning mx-2 ">Cancelar</a>
+                        </div>
+                    </div>
+
                 </form>
             </div>
         </div>

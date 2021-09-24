@@ -5,8 +5,12 @@
             <h2 class="text-center text-white my-2"><u>{{!isset($role) ? 'Creacion' : 'Edicion'}} de roles</u></h2>
 
             <div class="card bg-dark rounded shadow text-white col-8 mx-auto p-4">
-                <form method="POST" action="{{!isset($role) ? route('roles.store') : route('roles.edit', $role->id)}}">
+                <form method="POST" action="{{!isset($role) ? route('roles.store') : route('roles.update', $role->id)}}">
                     @csrf
+
+                    @if(isset($role))
+                        @method('PUT')
+                    @endif
 
                     <label class="my-2">
                         Nombre del rol:
@@ -25,10 +29,10 @@
                                     <div class="row my-4 form-check form-switch">
                                         <label>
                                             <input type="checkbox" name="privileges[]"
-                                                   @if(isset($role))
-                                                       @if($role->privileges->contains($item->id)) checked @endif
-                                                   @endif
-                                                   value="{{$item->id}}" class="form-check-input"
+                                               @if(isset($role))
+                                                   @if($role->privileges->contains($item->id)) checked @endif
+                                               @endif
+                                               value="{{$item->id}}" class="form-check-input"
                                             >
                                             {{$item->name}}
                                         </label>
