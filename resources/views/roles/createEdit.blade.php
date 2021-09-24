@@ -14,12 +14,12 @@
 
                     <label class="my-2">
                         Nombre del rol:
-                        <input type="text" name="role_name" class="mx-2 rounded" value="{{isset($role) ? $role->role_name : ''}}">
+                        <input type="text" name="role_name" class="mx-2 rounded" value="{{isset($role) ? $role->role_name : ''}}" required>
                     </label>
 
                     <label class="mx-2">
                         Seleccionar todos los privilegios
-                        <input type="checkbox" onclick="toggle(this)">
+                        <input id="all_privileges" type="checkbox" onclick="toggle(this)">
                     </label>
 
                     <div class="row text-justify">
@@ -32,7 +32,8 @@
                                                @if(isset($role))
                                                    @if($role->privileges->contains($item->id)) checked @endif
                                                @endif
-                                               value="{{$item->id}}" class="form-check-input"
+                                               value="{{$item->id}}" class="form-check-input privilege"
+                                               onclick="validateAllCheckbox()"
                                             >
                                             {{$item->name}}
                                         </label>
@@ -51,6 +52,16 @@
     </div>
 
     <script>
+
+        const QUANTITY_PRIVILEGES = 12
+
+        const validateAllCheckbox = () => {
+            const checkboxes = document.querySelectorAll('input[name="privileges[]"]:checked').length
+            const allPrivileges = document.getElementById('all_privileges')
+
+            allPrivileges.checked = checkboxes === QUANTITY_PRIVILEGES
+        }
+
         const toggle = source => {
             const checkboxes = document.getElementsByName('privileges[]')
             for(let i = 0; i < checkboxes.length; ++i)
