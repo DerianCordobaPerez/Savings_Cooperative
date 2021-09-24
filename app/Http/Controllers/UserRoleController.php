@@ -43,17 +43,14 @@ class UserRoleController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $employee = (new Employee())->create($request->except([
-            'password', 'role_id', 'start_date', 'final_date'
-        ]));
+        $employee = (new Employee())->create($request->except(['password', 'role_id', 'start_date', 'final_date']));
 
-        (new UserRole())->create([
-            'employee_id' => $employee->id,
-            'role_id' => $request->role_id,
-            'password' => Hash::make($request->password),
-            'start_date' => $request->start_date,
-            'final_date' => $request->final_date
-        ]);
+        (new UserRole())->create(
+            array_merge([
+                'employee_id' => $employee->id, 'password' => Hash::make($request->password)],
+                $request->only(['role_id', 'start_date', 'final_date'])
+            )
+        );
 
         return redirect()->route('userRoles.index')
             ->with('success', 'Empleado creado correctamente')
