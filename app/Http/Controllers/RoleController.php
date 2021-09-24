@@ -44,13 +44,6 @@ class RoleController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $validator = Validator::make($request->all(), [
-            'role_name' => 'required|min:2'
-        ]);
-
-        if($validator->fails())
-            return redirect()->route('roles.create')->with('error', 'El nombre del rol es requerido');
-
         $role = (new Role())->create([
             'role_name' => $request->role_name
         ]);
@@ -89,13 +82,6 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role): RedirectResponse
     {
-        $validator = Validator::make($request->all(), [
-            'role_name' => 'required|min:2'
-        ]);
-
-        if($validator->fails())
-            return redirect()->route('roles.create')->with('error', 'El nombre del rol es requerido');
-
         if($role->role_name !== $request->role_name)
             $role->update($request->only(['role_name']));
 
