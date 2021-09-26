@@ -20,15 +20,12 @@ class CreateReferencesTable extends Migration
             $table->string('name');
             $table->string('name_of_work');
             $table->string('mail');
-            $table->unsignedBigInteger('telephone_id');
+            $table->string('telephone');
             $table->string('observation');
             $table->timestamps();
 
             $table->foreign('partner_id')
                 ->references('id')->on('partners')->cascadeOnUpdate()->cascadeOnDelete();
-
-            $table->foreign('telephone_id')
-                ->references('id')->on('telephones')->cascadeOnUpdate()->cascadeOnDelete();
         });
     }
 

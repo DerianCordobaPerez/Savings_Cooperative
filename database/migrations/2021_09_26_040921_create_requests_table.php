@@ -16,27 +16,27 @@ class CreateRequestsTable extends Migration
         Schema::create('requests', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->date('date_of_admission');
             $table->unsignedBigInteger('partner_id');
-            $table->unsignedBigInteger('module_id');
-            $table->unsignedBigInteger('request_id');
-            $table->unsignedBigInteger('operation_id');
+            $table->date('date_of_admission');
+            $table->unsignedBigInteger('module');
+            $table->unsignedBigInteger('product');
+            $table->unsignedBigInteger('branch_office');
+            $table->unsignedBigInteger('office');
             $table->date('date');
             $table->string('direction');
             $table->string('observation');
-            $table->enum('status', ['active', 'suspend']);
-            $table->unsignedBigInteger('account_id');
+            $table->string('status');
+            $table->unsignedBigInteger('number_account');
             $table->double('amount');
-            $table->boolean('cash');
-            $table->boolean('check');
+            $table->double('cash');
+            $table->double('check');
+            $table->timestamps();
 
             $table->foreign('user_id')
                 ->references('id')->on('user_roles')->cascadeOnDelete()->cascadeOnUpdate();
 
             $table->foreign('partner_id')
                 ->references('id')->on('partners')->cascadeOnUpdate()->cascadeOnDelete();
-
-            $table->timestamps();
         });
     }
 
