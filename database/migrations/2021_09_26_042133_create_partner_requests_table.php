@@ -15,18 +15,22 @@ class CreatePartnerRequestsTable extends Migration
     {
         Schema::create('partner_requests', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('request_user_id');
-            $table->unsignedBigInteger('request_partner_id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('request_id');
+            $table->unsignedBigInteger('partner_id');
             $table->string('relation');
             $table->string('direction');
+            $table->timestamps();
 
-            $table->foreign('request_user_id')
+            $table->foreign('user_id')
                 ->references('user_id')->on('requests')->cascadeOnUpdate()->cascadeOnDelete();
 
-            $table->foreign('request_partner_id')
+            $table->foreign('request_id')
+                ->references('id')->on('requests')->cascadeOnUpdate()->cascadeOnDelete();
+
+            $table->foreign('partner_id')
                 ->references('partner_id')->on('requests')->cascadeOnUpdate()->cascadeOnDelete();
 
-            $table->timestamps();
         });
     }
 

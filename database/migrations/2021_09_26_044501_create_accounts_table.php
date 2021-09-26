@@ -16,10 +16,9 @@ class CreateAccountsTable extends Migration
         Schema::create('accounts', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('module_id');
-            $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('movement_id');
-            $table->unsignedBigInteger('request_id');
-            $table->unsignedBigInteger('operation_id');
+            $table->unsignedBigInteger('branch_office_id');
+            $table->unsignedBigInteger('office_id');
             $table->unsignedBigInteger('partner_id');
             $table->date('opening_date');
             $table->string('official_count');
@@ -32,13 +31,20 @@ class CreateAccountsTable extends Migration
             $table->date('date_of_last_movement');
             $table->timestamps();
 
-            $table->foreign('request_id')
-                ->references('id')->on('requests')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreign('module_id')
+                ->references('module_id')->on('movements')->cascadeOnUpdate()->cascadeOnDelete();
+
+            $table->foreign('movement_id')
+                ->references('id')->on('movements')->cascadeOnUpdate()->cascadeOnDelete();
+
+            $table->foreign('branch_office_id')
+                ->references('branch_office_id')->on('movements')->cascadeOnUpdate()->cascadeOnDelete();
+
+            $table->foreign('office_id')
+                ->references('office_id')->on('movements')->cascadeOnUpdate()->cascadeOnDelete();
 
             $table->foreign('partner_id')
                 ->references('id')->on('partners')->cascadeOnUpdate()->cascadeOnDelete();
-
-
         });
     }
 

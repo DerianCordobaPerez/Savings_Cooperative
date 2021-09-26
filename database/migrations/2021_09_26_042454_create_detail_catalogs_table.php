@@ -18,11 +18,11 @@ class CreateDetailCatalogsTable extends Migration
             $table->unsignedBigInteger('catalog_id');
             $table->text('description');
             $table->unsignedBigInteger('alternate_id');
+            $table->timestamps();
 
             $table->foreign('catalog_id')
                 ->references('id')->on('catalogs')->cascadeOnDelete()->cascadeOnUpdate();
 
-            $table->timestamps();
         });
     }
 

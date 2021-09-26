@@ -15,16 +15,20 @@ class CreateAccountRequestsTable extends Migration
     {
         Schema::create('account_requests', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('request_user_id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('request_id');
             $table->double('amount');
             $table->boolean('cash');
             $table->boolean('check');
             $table->string('transfer');
+            $table->timestamps();
 
-            $table->foreign('request_user_id')
+            $table->foreign('user_id')
                 ->references('user_id')->on('requests')->cascadeOnUpdate()->cascadeOnDelete();
 
-            $table->timestamps();
+            $table->foreign('request_id')
+                ->references('id')->on('requests')->cascadeOnUpdate()->cascadeOnDelete();
+
         });
     }
 
