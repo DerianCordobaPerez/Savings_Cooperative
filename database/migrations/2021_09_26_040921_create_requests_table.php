@@ -15,7 +15,7 @@ class CreateRequestsTable extends Migration
     {
         Schema::create('requests', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_role_id');
             $table->unsignedBigInteger('partner_id');
             $table->date('date_of_admission');
             $table->unsignedBigInteger('module');
@@ -32,7 +32,7 @@ class CreateRequestsTable extends Migration
             $table->double('check');
             $table->timestamps();
 
-            $table->foreign('user_id')
+            $table->foreign('user_role_id')
                 ->references('id')->on('user_roles')->cascadeOnDelete()->cascadeOnUpdate();
 
             $table->foreign('partner_id')
