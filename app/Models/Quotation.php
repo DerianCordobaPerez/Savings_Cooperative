@@ -2,26 +2,23 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-/**
- * @mixin Builder
- */
-class Transaction extends Model
+class Quotation extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'module_id',
-        'description'
+        'currency_id',
+        'date',
+        'value'
     ];
 
-    public function modules(): BelongsToMany
+    public function currencies(): BelongsToMany
     {
-        return $this->belongsToMany(Module::class);
+        return $this->belongsToMany(Currency::class);
     }
 
 }

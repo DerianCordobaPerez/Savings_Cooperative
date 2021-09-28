@@ -10,22 +10,19 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * @mixin Builder
  */
-class Office extends Model
+class Product extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'branch_office_id',
+        'module_id',
         'name',
-        'province',
-        'city',
-        'direction',
-        'phone'
+        'description'
     ];
 
-    public function branch_office(): BelongsTo
+    public function module(): BelongsTo
     {
-        return $this->belongsTo(BranchOffice::class);
+        return $this->belongsTo(Module::class);
     }
 
 }

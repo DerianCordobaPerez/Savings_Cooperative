@@ -40,7 +40,7 @@ class CreateMovementsTable extends Migration
             $table->foreign('transaction_id')
                 ->references('transaction_id')->on('headings')->cascadeOnUpdate()->cascadeOnDelete();
 
-            $table->foreign('headings_id')
+            $table->foreign('heading_id')
                 ->references('id')->on('headings')->cascadeOnUpdate()->cascadeOnDelete();
         });
     }

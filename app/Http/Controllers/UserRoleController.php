@@ -91,10 +91,12 @@ class UserRoleController extends Controller
      */
     public function update(Request $request, UserRole $userRole): RedirectResponse
     {
+        // Update the employee within the relationship found except for some data
         $userRole->employee->update($request->except([
             '_token', 'send', '_method', 'password', 'role_id', 'start_date', 'final_date'
         ]));
 
+        // Update the user's role
         $userRole->update(
             array_merge(
                 ['employee_id' => $userRole->employee->id],
@@ -102,6 +104,7 @@ class UserRoleController extends Controller
             )
         );
 
+        // Returns the view where the list of users is
         return redirect()->route('userRoles.index')->with('success', 'Empleado actualizado correctamente');
     }
 

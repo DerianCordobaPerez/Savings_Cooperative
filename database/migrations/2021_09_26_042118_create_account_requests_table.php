@@ -15,7 +15,7 @@ class CreateAccountRequestsTable extends Migration
     {
         Schema::create('account_requests', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_role_id');
             $table->unsignedBigInteger('request_id');
             $table->double('amount');
             $table->boolean('cash');
@@ -23,8 +23,8 @@ class CreateAccountRequestsTable extends Migration
             $table->string('transfer');
             $table->timestamps();
 
-            $table->foreign('user_id')
-                ->references('user_id')->on('requests')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreign('user_role_id')
+                ->references('user_role_id')->on('requests')->cascadeOnUpdate()->cascadeOnDelete();
 
             $table->foreign('request_id')
                 ->references('id')->on('requests')->cascadeOnUpdate()->cascadeOnDelete();

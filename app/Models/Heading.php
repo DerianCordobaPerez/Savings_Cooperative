@@ -10,26 +10,21 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 /**
  * @mixin Builder
  */
-class TransactionRole extends Model
+class Heading extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'module_id',
-        'role_id',
-        'allowed_amount',
-        'requires_authorization',
-        'transaction_id'
+        'transaction_id',
+        'description',
+        'mnemonic',
+        'movement_type'
     ];
 
     public function modules(): BelongsToMany
     {
         return $this->belongsToMany(Transaction::class);
-    }
-
-    public function roles(): BelongsToMany
-    {
-        return $this->belongsToMany(Role::class);
     }
 
     public function transactions(): BelongsToMany
