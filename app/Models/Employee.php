@@ -6,6 +6,7 @@ use DateTime;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property mixed id
@@ -49,4 +50,10 @@ class Employee extends Model
      * @var bool
      */
     public $incrementing = true;
+
+    public function user_role(): BelongsTo
+    {
+        return $this->belongsTo(UserRole::class);
+    }
+
 }
