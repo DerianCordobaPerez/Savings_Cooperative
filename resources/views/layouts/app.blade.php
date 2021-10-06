@@ -17,6 +17,9 @@
 
 </head>
 <body class="antialiased">
+    @auth
+        @include('layouts.navbar')
+    @endauth
 
     <div class="container">
         <div class="my-2">

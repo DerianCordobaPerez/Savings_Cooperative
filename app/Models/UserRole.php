@@ -5,9 +5,9 @@ namespace App\Models;
 use DateTime;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
  * @property mixed id
@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property DateTime final_date
  * @mixin Builder
  */
-class UserRole extends Model
+class UserRole extends Authenticatable
 {
     use HasFactory;
 
@@ -46,4 +46,6 @@ class UserRole extends Model
      * @var string[]
      */
     protected $hidden =['password'];
+
+    protected $appends = ['internal_mail'];
 }
