@@ -42,6 +42,11 @@ class UserRole extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
+    public function hasRole(string $role): bool
+    {
+        return $this->role->role_name === $role;
+    }
+
     /**
      * @var string[]
      */

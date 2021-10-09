@@ -1,3 +1,6 @@
+@import 'components/card.css';
+
 body {
-    background: linear-gradient(90deg, #af0037 0%, #d70000 43%, #ffdc00 100%);
+    background: -webkit-linear-gradient(to right, #232526, #414345);
+    background: linear-gradient(to right, #232526, #414345);
 }

@@ -37,12 +37,12 @@ class AuthUserRoleController extends Controller
             'password' => 'required'
         ]);
 
-        $employee = ModelsHelper::get_model(Employee::class, 'internal_mail', $request->email);
+        $employee = ModelsHelper::getModel(Employee::class, 'internal_mail', $request->email);
 
         if(!isset($employee))
             return redirect()->back()->withErrors(['email' => 'El correo ingresado no es correcto']);
 
-        $user_role = ModelsHelper::get_model(
+        $user_role = ModelsHelper::getModel(
             UserRole::class,
             'employee_id',
             $employee->id
@@ -53,7 +53,7 @@ class AuthUserRoleController extends Controller
             'password' => $request->password
         ];
 
-        if(auth()->guard('user_role')->attempt($credentials))
+        if(auth()->guard('user_role')->attempt($credentials, $request->has('remember')))
             return redirect()->route('home')
                 ->with('success', 'Sesion iniciada correctamente');
 
