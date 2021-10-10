@@ -20,8 +20,12 @@ class UserRoleController extends Controller
      * @return View
      */
     public function index(): View {
-        return view('users.index')
-            ->with('userRoles', (new UserRole())->all());
+
+        return RoleVerificationHelper::redirectOrView(
+            'users.index',
+            'Admin',
+            ['userRoles' => (new UserRole())->all()]
+        );
     }
 
     /**
@@ -71,7 +75,6 @@ class UserRoleController extends Controller
      */
     public function show(UserRole $userRole): View
     {
-
         return RoleVerificationHelper::redirectOrView(
             'users.show',
             'Admin',

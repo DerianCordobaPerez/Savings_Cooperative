@@ -33,12 +33,18 @@ class RoleVerificationHelper
 
     private static function makeView(string $v, mixed $data): View
     {
+        // Create view
         $view = ViewMake::make($v);
 
+        // We validate that the data sent is not null
         if(isset($data))
+            // We go through the data array using key value
             foreach ($data as $key => $value)
+                //Inside the view we create a new attribute with the key and
+                // give it the corresponding value
                 $view->$key = $value;
 
+        // Returns view
         return $view;
     }
 
