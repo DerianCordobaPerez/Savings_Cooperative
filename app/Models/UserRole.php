@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use JetBrains\PhpStorm\Pure;
 
 /**
  * @property mixed id
@@ -44,13 +45,16 @@ class UserRole extends Authenticatable
 
     public function hasRole(string $role): bool
     {
-        return $this->role->role_name === $role;
+        return trim($this->role->role_name) === trim($role);
+    }
+
+    #[Pure]
+    public function isAdmin(): bool {
+        return $this->hasRole('admin');
     }
 
     /**
      * @var string[]
      */
     protected $hidden =['password'];
-
-    protected $appends = ['internal_mail'];
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\RoleVerificationHelper;
 use App\Models\Employee;
 use App\Models\Role;
 use App\Models\UserRole;
@@ -26,13 +27,18 @@ class UserRoleController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return View
+     * @return RedirectResponse|View
      */
-    public function create(): View
+    public function create(): RedirectResponse|View
     {
-        return view('users.createEdit')
-            ->with('userRole')
-            ->with('roles', (new Role())->all());
+        return RoleVerificationHelper::redirectOrView(
+            'users.createEdit',
+            'Cajero',
+            [
+                'userRole',
+                'roles' => (new Role())->all()
+            ]
+        );
     }
 
     /**
@@ -65,8 +71,12 @@ class UserRoleController extends Controller
      */
     public function show(UserRole $userRole): View
     {
-        return view('users.show')
-            ->with('userRole', $userRole);
+
+        return RoleVerificationHelper::redirectOrView(
+            'users.show',
+            'Admin',
+            ['userRole' => $userRole]
+        );
     }
 
     /**
@@ -77,9 +87,14 @@ class UserRoleController extends Controller
      */
     public function edit(UserRole $userRole): View
     {
-        return view('users.createEdit')
-            ->with('roles', (new Role())->all())
-            ->with('userRole', $userRole);
+        return RoleVerificationHelper::redirectOrView(
+            'users.createEdit',
+            'Cajero',
+            [
+                'userRole' => $userRole,
+                'roles' => (new Role())->all()
+            ]
+        );
     }
 
     /**
