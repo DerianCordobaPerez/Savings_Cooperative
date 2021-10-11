@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\Auth\AuthUserRoleController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PartnerController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RequestController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserRoleController;
@@ -18,13 +20,14 @@ Route::group([], function() {
 
         Route::get('/', [HomeController::class, 'home'])->name('home');
 
-        Route::resource('userRoles', UserRoleController::class);
-
-        Route::resource('roles', RoleController::class);
-
-        Route::resource('partners', PartnerController::class);
-
-        Route::resource('requests', RequestController::class);
+        Route::resources([
+            'userRoles' => UserRoleController::class,
+            'roles' => RoleController::class,
+            'partners' => PartnerController::class,
+            'requests' => RequestController::class,
+            'products' => ProductController::class,
+            'catalogs' => CatalogController::class
+        ]);
 
         Route::get('logout', [AuthUserRoleController::class, 'logout'])->name('logout');
 

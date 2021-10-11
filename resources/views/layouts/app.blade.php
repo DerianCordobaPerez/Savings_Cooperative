@@ -15,6 +15,9 @@
     <!-- Styles -->
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
 
+    <!-- Slick -->
+    @yield('slick-css')
+
 </head>
 <body class="antialiased">
     @auth
@@ -33,6 +36,15 @@
 
     <!-- FONT AWESOME -->
     <script src="https://kit.fontawesome.com/0496ae07d8.js" crossorigin="anonymous"></script>
+
+    <!-- JQUERY -->
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+
+    <!-- SLICK -->
+    <script type="text/javascript" src="{{asset('slick/slick.min.js')}}"></script>
+
+    <!-- CUSTOM JS -->
+    @yield('js')
 
 </body>
 </html>

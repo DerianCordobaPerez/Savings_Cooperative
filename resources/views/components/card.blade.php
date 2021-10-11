@@ -2,7 +2,7 @@
 
     @if(isset($img))
         <div class="card-image">
-            <img src="{{asset("img/cards/$img")}}" alt="img"/>
+            <img src="{{asset("img/$img")}}" alt="img"/>
         </div>
     @endif
 

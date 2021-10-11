@@ -51,6 +51,9 @@
         </div>
     </div>
 
+@endsection
+
+@section('javascript')
     <script>
 
         const QUANTITY_PRIVILEGES = 12

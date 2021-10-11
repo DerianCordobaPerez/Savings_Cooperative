@@ -40,7 +40,7 @@ class AuthUserRoleController extends Controller
         $employee = ModelsHelper::getModel(Employee::class, 'internal_mail', $request->email);
 
         if(!isset($employee))
-            return redirect()->back()->withErrors(['email' => 'El correo ingresado no es correcto']);
+            return back()->withErrors(['email' => 'El correo ingresado no es correcto']);
 
         $user_role = ModelsHelper::getModel(
             UserRole::class,

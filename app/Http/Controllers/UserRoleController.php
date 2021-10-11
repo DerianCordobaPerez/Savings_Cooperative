@@ -17,10 +17,10 @@ class UserRoleController extends Controller
     /**
      * Show list userRoles
      *
-     * @return View
+     * @return RedirectResponse|View
      */
-    public function index(): View {
-
+    public function index(): RedirectResponse|View
+    {
         return RoleVerificationHelper::redirectOrView(
             'users.index',
             'Admin',
@@ -37,7 +37,7 @@ class UserRoleController extends Controller
     {
         return RoleVerificationHelper::redirectOrView(
             'users.createEdit',
-            'Cajero',
+            'Admin',
             [
                 'userRole',
                 'roles' => (new Role())->all()
@@ -53,27 +53,25 @@ class UserRoleController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $employee = (new Employee())->create($request->except(['password', 'role_id', 'start_date', 'final_date']));
+        return RoleVerificationHelper::handleRedirect(
+            ['role' => 'Admin', 'request' => $request, 'object', 'route' => 'userRoles.index'],
+            function ($request) {
+                $employee = (new Employee())->create($request->except(['password', 'role_id', 'start_date', 'final_date']));
 
-        (new UserRole())->create(
-            array_merge([
-                'employee_id' => $employee->id, 'password' => Hash::make($request->password)],
-                $request->only(['role_id', 'start_date', 'final_date'])
-            )
+                (new UserRole())->create(array_merge(['employee_id' => $employee->id, 'password' => Hash::make($request->password)], $request->only(['role_id', 'start_date', 'final_date'])));
+
+                return $this->handleRedirect("agregado");
+            }
         );
-
-        return redirect()->route('userRoles.index')
-            ->with('success', 'Empleado creado correctamente')
-            ->with('userRoles', UserRole::all());
     }
 
     /**
      * Display the specified resource.
      *
      * @param UserRole $userRole
-     * @return View
+     * @return RedirectResponse|View
      */
-    public function show(UserRole $userRole): View
+    public function show(UserRole $userRole): RedirectResponse|View
     {
         return RoleVerificationHelper::redirectOrView(
             'users.show',
@@ -86,13 +84,13 @@ class UserRoleController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param UserRole $userRole
-     * @return View
+     * @return RedirectResponse|View
      */
-    public function edit(UserRole $userRole): View
+    public function edit(UserRole $userRole): RedirectResponse|View
     {
         return RoleVerificationHelper::redirectOrView(
             'users.createEdit',
-            'Cajero',
+            'Admin',
             [
                 'userRole' => $userRole,
                 'roles' => (new Role())->all()
@@ -109,21 +107,26 @@ class UserRoleController extends Controller
      */
     public function update(Request $request, UserRole $userRole): RedirectResponse
     {
-        // Update the employee within the relationship found except for some data
-        $userRole->employee->update($request->except([
-            '_token', 'send', '_method', 'password', 'role_id', 'start_date', 'final_date'
-        ]));
+        return RoleVerificationHelper::handleRedirect(
+            ['role' => 'Admin', 'request' => $request, 'object' => $userRole, 'route' => 'userRoles.index'],
+            function ($request, $userRole) {
+                // Update the employee within the relationship found except for some data
+                $userRole->employee->update($request->except([
+                    '_token', 'send', '_method', 'password', 'role_id', 'start_date', 'final_date'
+                ]));
 
-        // Update the user's role
-        $userRole->update(
-            array_merge(
-                ['employee_id' => $userRole->employee->id],
-                $request->only(['password', 'role_id', 'start_date', 'final_date'])
-            )
+                // Update the user's role
+                $userRole->update(
+                    array_merge(
+                        ['employee_id' => $userRole->employee->id],
+                        $request->only(['password', 'role_id', 'start_date', 'final_date'])
+                    )
+                );
+
+                // Returns the view where the list of users is
+                return $this->handleRedirect("actualizado");
+            }
         );
-
-        // Returns the view where the list of users is
-        return redirect()->route('userRoles.index')->with('success', 'Empleado actualizado correctamente');
     }
 
     /**
@@ -134,10 +137,21 @@ class UserRoleController extends Controller
      */
     public function destroy(UserRole $userRole): RedirectResponse
     {
-        $userRole->role()->delete();
-        $userRole->delete();
+        return RoleVerificationHelper::handleRedirect(
+            ['role' => 'Admin', 'request', 'object' => $userRole, 'route' => 'userRoles.index'],
+            function ($request, $userRole) {
+                $userRole->role()->delete();
+                $userRole->delete();
+
+                return $this->handleRedirect("eliminado");
+            }
+        );
+    }
+
+    private function handleRedirect(string $message): RedirectResponse
+    {
         return redirect()->route('userRoles.index')
-            ->with('success', 'Empleado eliminado correctamente')
+            ->with('success', "Empleado $message correctamente")
             ->with('userRoles', UserRole::all());
     }
 }

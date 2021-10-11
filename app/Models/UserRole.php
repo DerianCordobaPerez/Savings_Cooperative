@@ -50,7 +50,7 @@ class UserRole extends Authenticatable
 
     #[Pure]
     public function isAdmin(): bool {
-        return $this->hasRole('admin');
+        return $this->hasRole('admins');
     }
 
     /**
