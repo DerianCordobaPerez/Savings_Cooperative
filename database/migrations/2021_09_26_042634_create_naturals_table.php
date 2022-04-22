@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Partner;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,11 +12,11 @@ class CreateNaturalsTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('naturals', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('partner_id');
+            $table->foreignIdFor(Partner::class)->constrained();
             $table->string('paternal_surname');
             $table->string('maternal_surname');
             $table->string('names');
@@ -32,9 +33,6 @@ class CreateNaturalsTable extends Migration
             $table->string('secondary_activity');
             $table->string('occupation');
             $table->timestamps();
-
-            $table->foreign('partner_id')
-                ->references('id')->on('partners')->cascadeOnUpdate()->cascadeOnDelete();
         });
     }
 
@@ -43,7 +41,7 @@ class CreateNaturalsTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('naturals');
     }

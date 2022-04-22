@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\{Partner, UserRole};
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,12 +12,12 @@ class CreateRequestsTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('requests', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_role_id');
-            $table->unsignedBigInteger('partner_id');
+            $table->foreignIdFor(UserRole::class)->constrained();
+            $table->foreignIdFor(Partner::class)->constrained();
             $table->date('date_of_admission');
             $table->unsignedBigInteger('module');
             $table->unsignedBigInteger('product');
@@ -31,12 +32,6 @@ class CreateRequestsTable extends Migration
             $table->double('cash');
             $table->double('check');
             $table->timestamps();
-
-            $table->foreign('user_role_id')
-                ->references('id')->on('user_roles')->cascadeOnDelete()->cascadeOnUpdate();
-
-            $table->foreign('partner_id')
-                ->references('id')->on('partners')->cascadeOnUpdate()->cascadeOnDelete();
         });
     }
 
@@ -45,7 +40,7 @@ class CreateRequestsTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('requests');
     }

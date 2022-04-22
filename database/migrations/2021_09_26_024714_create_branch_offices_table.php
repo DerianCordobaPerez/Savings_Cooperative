@@ -11,7 +11,7 @@ class CreateBranchOfficesTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('branch_offices', function (Blueprint $table) {
             $table->id();
@@ -27,7 +27,7 @@ class CreateBranchOfficesTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('branch_offices');
     }

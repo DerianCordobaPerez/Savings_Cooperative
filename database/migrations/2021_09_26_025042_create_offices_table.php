@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\BranchOffice;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,20 +12,17 @@ class CreateOfficesTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('offices', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('branch_office_id');
+            $table->foreignIdFor(BranchOffice::class)->constrained();
             $table->string('name');
             $table->string('province');
             $table->string('city');
             $table->text('direction');
             $table->string('phone');
             $table->timestamps();
-
-            $table->foreign('branch_office_id')
-                ->references('id')->on('offices')->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
 
@@ -33,7 +31,7 @@ class CreateOfficesTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('offices');
     }

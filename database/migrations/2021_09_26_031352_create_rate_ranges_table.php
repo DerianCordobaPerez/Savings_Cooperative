@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\{Currency, Module, Parameter};
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,13 +12,13 @@ class CreateRateRangesTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('rate_ranges', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('module_id');
-            $table->unsignedBigInteger('currency_id');
-            $table->unsignedBigInteger('parameter_id');
+            $table->foreignIdFor(Module::class)->constrained();
+            $table->foreignIdFor(Currency::class)->constrained();
+            $table->foreignIdFor(Parameter::class)->constrained();
             $table->unsignedInteger('rate_type');
             $table->unsignedInteger('currency');
             $table->double('ride_from');
@@ -26,15 +27,6 @@ class CreateRateRangesTable extends Migration
             $table->date('date_to');
             $table->double('margin');
             $table->timestamps();
-
-            $table->foreign('module_id')
-                ->references('module_id')->on('parameters')->cascadeOnDelete()->cascadeOnUpdate();
-
-            $table->foreign('currency_id')
-                ->references('currency_id')->on('parameters')->cascadeOnDelete()->cascadeOnUpdate();
-
-            $table->foreign('parameter_id')
-                ->references('id')->on('parameters')->cascadeOnUpdate()->cascadeOnDelete();
         });
     }
 
@@ -43,7 +35,7 @@ class CreateRateRangesTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('rate_ranges');
     }

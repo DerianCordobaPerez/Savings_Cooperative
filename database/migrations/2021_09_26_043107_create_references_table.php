@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Partner;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,11 +12,11 @@ class CreateReferencesTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('references', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('partner_id');
+            $table->foreignIdFor(Partner::class)->constrained();
             $table->string('type_of_reference');
             $table->string('name');
             $table->string('name_of_work');
@@ -23,9 +24,6 @@ class CreateReferencesTable extends Migration
             $table->string('telephone');
             $table->string('observation');
             $table->timestamps();
-
-            $table->foreign('partner_id')
-                ->references('id')->on('partners')->cascadeOnUpdate()->cascadeOnDelete();
         });
     }
 
@@ -34,7 +32,7 @@ class CreateReferencesTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('references');
     }

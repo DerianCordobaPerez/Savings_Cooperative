@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\{Currency, Module};
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,12 +12,12 @@ class CreateParametersTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('parameters', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('module_id');
-            $table->unsignedBigInteger('currency_id');
+            $table->foreignIdFor(Module::class)->constrained();
+            $table->foreignIdFor(Currency::class)->constrained();
             $table->char('library');
             $table->char('checks');
             $table->char('account_status');
@@ -35,12 +36,6 @@ class CreateParametersTable extends Migration
             $table->unsignedInteger('product_immobilizes');
             $table->text('description');
             $table->timestamps();
-
-            $table->foreign('module_id')
-                ->references('id')->on('modules')->cascadeOnUpdate()->cascadeOnDelete();
-
-            $table->foreign('currency_id')
-                ->references('id')->on('currencies')->cascadeOnUpdate()->cascadeOnDelete();
         });
     }
 
@@ -49,7 +44,7 @@ class CreateParametersTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('parameters');
     }

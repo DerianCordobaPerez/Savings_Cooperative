@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Module;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,16 +12,13 @@ class CreateTransactionsTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('module_id');
+            $table->foreignIdFor(Module::class)->constrained();
             $table->text('description');
             $table->timestamps();
-
-            $table->foreign('module_id')
-                ->references('id')->on('modules')->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
 
@@ -29,7 +27,7 @@ class CreateTransactionsTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('transactions');
     }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\{Module, Transaction};
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,22 +12,16 @@ class CreateHeadingsTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('headings', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('module_id');
-            $table->unsignedBigInteger('transaction_id');
+            $table->foreignIdFor(Module::class)->constrained();
+            $table->foreignIdFor(Transaction::class)->constrained();
             $table->text('description');
             $table->text('mnemonic');
             $table->char('movement_type');
             $table->timestamps();
-
-            $table->foreign('module_id')
-                ->references('module_id')->on('transactions')->cascadeOnUpdate()->cascadeOnDelete();
-
-            $table->foreign('transaction_id')
-                ->references('id')->on('transactions')->cascadeOnUpdate()->cascadeOnDelete();
         });
     }
 
@@ -35,7 +30,7 @@ class CreateHeadingsTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('headings');
     }

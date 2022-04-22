@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Partner;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,19 +12,16 @@ class CreateDocumentsTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('partner_id');
+            $table->foreignIdFor(Partner::class)->constrained();
             $table->string('type_of_document');
             $table->date('reference_date');
             $table->date('date_of_expiry');
             $table->string('country_of_issue');
             $table->timestamps();
-
-            $table->foreign('partner_id')
-                ->references('id')->on('partners')->cascadeOnUpdate()->cascadeOnDelete();
         });
     }
 
@@ -32,7 +30,7 @@ class CreateDocumentsTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('documents');
     }
