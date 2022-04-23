@@ -2,14 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-/**
- * @mixin Builder
- */
 class Reference extends Model
 {
     use HasFactory;
@@ -24,9 +20,9 @@ class Reference extends Model
         'observation'
     ];
 
-    public function partner(): BelongsTo
+    public function partner(): HasMany
     {
-        return $this->belongsTo(Partner::class);
+        return $this->hasMany(Partner::class);
     }
 
 }

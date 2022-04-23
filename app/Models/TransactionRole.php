@@ -2,14 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-/**
- * @mixin Builder
- */
 class TransactionRole extends Model
 {
     use HasFactory;
@@ -22,19 +18,19 @@ class TransactionRole extends Model
         'transaction_id'
     ];
 
-    public function modules(): BelongsToMany
+    public function module(): HasMany
     {
-        return $this->belongsToMany(Transaction::class);
+        return $this->hasMany(Transaction::class);
     }
 
-    public function roles(): BelongsToMany
+    public function roles(): HasMany
     {
-        return $this->belongsToMany(Role::class);
+        return $this->hasMany(Role::class);
     }
 
-    public function transactions(): BelongsToMany
+    public function transaction(): HasMany
     {
-        return $this->belongsToMany(Transaction::class);
+        return $this->hasMany(Transaction::class);
     }
 
 }

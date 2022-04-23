@@ -2,15 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-/**
- * @mixin Builder
- */
 class Partner extends Model
 {
     use HasFactory;
@@ -29,39 +24,43 @@ class Partner extends Model
         'executive'
     ];
 
-    public function requests(): HasMany
+    public function request(): BelongsTo
     {
-        return $this->hasMany(Request::class);
+        return $this->belongsTo(Request::class);
     }
 
-    public function naturals(): BelongsToMany
+    public function natural(): BelongsTo
     {
-        return $this->belongsToMany(Natural::class);
+        return $this->belongsTo(Natural::class);
     }
 
-    public function directions(): BelongsToMany
+    public function direction(): BelongsTo
     {
-        return $this->belongsToMany(Direction::class);
+        return $this->belongsTo(Direction::class);
     }
 
-    public function telephones(): BelongsToMany
+    public function telephone(): BelongsTo
     {
-        return $this->belongsToMany(Telephone::class);
+        return $this->belongsTo(Telephone::class);
     }
 
-    public function references(): BelongsToMany
+    public function reference(): BelongsTo
     {
-        return $this->belongsToMany(Reference::class);
+        return $this->belongsTo(Reference::class);
     }
 
-    public function jobs(): BelongsToMany
+    public function jobs(): BelongsTo
     {
-        return $this->belongsToMany(Job::class);
+        return $this->belongsTo(Job::class);
     }
 
-    public function documents(): BelongsToMany
+    public function document(): BelongsTo
     {
-        return $this->belongsToMany(Document::class);
+        return $this->belongsTo(Document::class);
     }
 
+    public function movement(): BelongsTo
+    {
+        return $this->belongsTo(Movement::class);
+    }
 }

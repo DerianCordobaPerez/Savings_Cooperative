@@ -2,15 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-/**
- * @mixin Builder
- */
 class Job extends Model
 {
     use HasFactory;
@@ -27,9 +22,9 @@ class Job extends Model
         'position'
     ];
 
-    public function partners(): BelongsToMany
+    public function partner(): HasMany
     {
-        return $this->belongsToMany(Partner::class);
+        return $this->hasMany(Partner::class);
     }
 
 }

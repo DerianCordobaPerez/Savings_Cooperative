@@ -2,15 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-/**
- * @mixin Builder
- */
 class Request extends Model
 {
     use HasFactory;
@@ -33,14 +28,14 @@ class Request extends Model
         'check'
     ];
 
-    public function user_role(): BelongsTo
+    public function userRole(): HasMany
     {
-        return $this->belongsTo(UserRole::class);
+        return $this->hasMany(UserRole::class);
     }
 
-    public function partner(): BelongsTo
+    public function partner(): HasMany
     {
-        return $this->belongsTo(Partner::class);
+        return $this->hasMany(Partner::class);
     }
 
 }

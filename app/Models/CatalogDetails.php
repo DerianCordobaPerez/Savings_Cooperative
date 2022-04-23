@@ -2,16 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-/**
- * @mixin Builder
- */
-class DetailCatalog extends Model
+class CatalogDetails extends Model
 {
     use HasFactory;
 
@@ -21,7 +16,7 @@ class DetailCatalog extends Model
         'alternate_id'
     ];
 
-    public function catalogs(): BelongsToMany
+    public function catalog(): BelongsToMany
     {
         return $this->belongsToMany(Catalog::class);
     }

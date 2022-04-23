@@ -2,14 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Account;
-use App\Models\BranchOffice;
-use App\Models\Module;
-use App\Models\Office;
-use App\Models\Partner;
-use App\Models\Product;
-use App\Models\Request as ModelRequest;
-use App\Models\UserRole;
+use App\Models\{Account, BranchOffice, Module, Office, Partner, Product, Request as ModelRequest, UserRole};
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;

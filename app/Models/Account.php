@@ -2,15 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-/**
- * @mixin Builder
- */
 class Account extends Model
 {
     use HasFactory;
@@ -32,24 +28,24 @@ class Account extends Model
         'date_of_last_movement'
     ];
 
-    public function modules(): BelongsToMany
+    public function module(): HasMany
     {
-        return $this->belongsToMany(Movement::class);
+        return $this->hasMany(Movement::class);
     }
 
-    public function movements(): BelongsToMany
+    public function movement(): HasMany
     {
-        return $this->belongsToMany(Movement::class);
+        return $this->hasMany(Movement::class);
     }
 
-    public function branch_offices(): BelongsToMany
+    public function branchOffice(): HasMany
     {
-        return $this->belongsToMany(Movement::class);
+        return $this->hasMany(Movement::class);
     }
 
-    public function offices(): BelongsToMany
+    public function office(): HasMany
     {
-        return $this->belongsToMany(Movement::class);
+        return $this->hasMany(Movement::class);
     }
 
     public function partner(): BelongsTo

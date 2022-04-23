@@ -2,14 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-/**
- * @mixin Builder
- */
 class RateRange extends Model
 {
     use HasFactory;
@@ -27,19 +23,19 @@ class RateRange extends Model
         'margin'
     ];
 
-    public function module(): BelongsToMany
+    public function module(): HasMany
     {
-        return $this->belongsToMany(Module::class);
+        return $this->hasMany(Module::class);
     }
 
-    public function currencies(): BelongsToMany
+    public function currencies(): HasMany
     {
-        return $this->belongsToMany(Currency::class);
+        return $this->hasMany(Currency::class);
     }
 
-    public function parameters(): BelongsToMany
+    public function parameters(): HasMany
     {
-        return $this->belongsToMany(Parameter::class);
+        return $this->hasMany(Parameter::class);
     }
 
 }
