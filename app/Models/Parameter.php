@@ -2,14 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-/**
- * @mixin Builder
- */
 class Parameter extends Model
 {
     use HasFactory;
@@ -36,14 +32,14 @@ class Parameter extends Model
         'description'
     ];
 
-    public function module(): BelongsTo
+    public function module(): HasMany
     {
-        return $this->belongsTo(Module::class);
+        return $this->hasMany(Module::class);
     }
 
-    public function currency(): BelongsTo
+    public function currency(): HasMany
     {
-        return $this->belongsTo(Currency::class);
+        return $this->hasMany(Currency::class);
     }
 
 }

@@ -2,14 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-/**
- * @mixin Builder
- */
 class Movement extends Model
 {
     use HasFactory;
@@ -28,29 +25,33 @@ class Movement extends Model
         'quotation'
     ];
 
-    public function branch_office(): BelongsTo
+    public function branchOffice(): HasMany
     {
-        return $this->belongsTo(BranchOffice::class);
+        return $this->hasMany(BranchOffice::class);
     }
 
-    public function office(): BelongsTo
+    public function office(): HasMany
     {
-        return $this->belongsTo(Office::class);
+        return $this->hasMany(Office::class);
     }
 
-    public function module(): BelongsTo
+    public function module(): HasMany
     {
-        return $this->belongsTo(Module::class);
+        return $this->hasMany(Module::class);
     }
 
-    public function transaction(): BelongsTo
+    public function transaction(): HasMany
     {
-        return $this->belongsTo(Transaction::class);
+        return $this->hasMany(Transaction::class);
     }
 
-    public function heading(): BelongsTo
+    public function heading(): HasMany
     {
-        return $this->belongsTo(Heading::class);
+        return $this->hasMany(Heading::class);
     }
 
+    public function partner(): HasMany
+    {
+        return $this->hasMany(Partner::class);
+    }
 }

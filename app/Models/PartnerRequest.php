@@ -2,14 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-/**
- * @mixin Builder
- */
 class PartnerRequest extends Model
 {
     use HasFactory;
@@ -22,19 +18,19 @@ class PartnerRequest extends Model
         'direction'
     ];
 
-    public function user_role(): BelongsToMany
+    public function userRole(): HasMany
     {
-        return $this->belongsToMany(Request::class);
+        return $this->hasMany(Request::class);
     }
 
-    public function request(): BelongsToMany
+    public function request(): HasMany
     {
-        return $this->belongsToMany(Request::class);
+        return $this->hasMany(Request::class);
     }
 
-    public function partner(): BelongsToMany
+    public function partner(): HasMany
     {
-        return $this->belongsToMany(Request::class);
+        return $this->hasMany(Request::class);
     }
 
 }

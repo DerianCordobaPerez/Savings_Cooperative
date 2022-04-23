@@ -2,15 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-/**
- * @mixin Builder
- */
 class AccountRequest extends Model
 {
     use HasFactory;
@@ -24,14 +20,14 @@ class AccountRequest extends Model
         'transfer'
     ];
 
-    public function user_role(): BelongsTo
+    public function userRole(): BelongsTo
     {
-        return $this->belongsTo(Request::class);
+        return $this->belongsTo(UserRole::class);
     }
 
-    public function request(): BelongsToMany
+    public function request(): HasMany
     {
-        return $this->belongsToMany(Request::class);
+        return $this->hasMany(Request::class);
     }
 
 }

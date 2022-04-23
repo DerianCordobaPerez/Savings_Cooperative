@@ -2,22 +2,10 @@
 
 namespace App\Models;
 
-use DateTime;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-/**
- * @property mixed id
- * @property string employee_id
- * @property mixed role_id
- * @property string password
- * @property DateTime start_date
- * @property DateTime final_date
- * @mixin Builder
- */
 class UserRole extends Authenticatable
 {
     use HasFactory;
@@ -25,26 +13,34 @@ class UserRole extends Authenticatable
     /**
      * @var string[]
      */
-    protected $fillable = ['employee_id', 'role_id', 'password', 'start_date', 'final_date'];
+    protected $fillable = [
+        'employee_id',
+        'role_id',
+        'password',
+        'start_date',
+        'final_date'
+    ];
 
-    /**
-     * @return BelongsTo
-     */
-    public function employee(): BelongsTo {
+    public function employee(): BelongsTo
+    {
         return $this->belongsTo(Employee::class);
     }
 
-    /**
-     * @return BelongsTo
-     */
     public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class);
     }
 
-    /**
-     * @var string[]
-     */
+    public function request(): BelongsTo
+    {
+        return $this->belongsTo(Request::class);
+    }
+
+    public function schedule(): BelongsTo
+    {
+        return $this->belongsTo(Schedule::class);
+    }
+
     protected $hidden =['password'];
 
     protected $appends = ['internal_mail'];

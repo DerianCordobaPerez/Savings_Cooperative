@@ -2,14 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-/**
- * @mixin Builder
- */
 class Office extends Model
 {
     use HasFactory;
@@ -23,9 +19,13 @@ class Office extends Model
         'phone'
     ];
 
-    public function branch_office(): BelongsTo
+    public function branchOffice(): BelongsTo
     {
         return $this->belongsTo(BranchOffice::class);
     }
 
+    public function movement(): BelongsTo
+    {
+        return $this->belongsTo(Movement::class);
+    }
 }

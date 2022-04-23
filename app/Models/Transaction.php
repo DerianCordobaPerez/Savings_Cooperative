@@ -2,14 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-/**
- * @mixin Builder
- */
 class Transaction extends Model
 {
     use HasFactory;
@@ -19,9 +16,14 @@ class Transaction extends Model
         'description'
     ];
 
-    public function modules(): BelongsToMany
+    public function module(): HasMany
     {
-        return $this->belongsToMany(Module::class);
+        return $this->hasMany(Module::class);
+    }
+
+    public function movement(): BelongsTo
+    {
+        return $this->belongsTo(Movement::class);
     }
 
 }

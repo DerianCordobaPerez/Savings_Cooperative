@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Quotation extends Model
 {
@@ -16,9 +16,9 @@ class Quotation extends Model
         'value'
     ];
 
-    public function currencies(): BelongsToMany
+    public function currencies(): HasMany
     {
-        return $this->belongsToMany(Currency::class);
+        return $this->hasMany(Currency::class);
     }
 
 }

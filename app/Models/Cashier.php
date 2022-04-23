@@ -12,19 +12,19 @@ class Cashier extends Model
 
     protected $fillable = [
         'user_role_id',
-        'branch_office_id',
+        'office_branch_id',
         'office_id',
         'date',
         'type_of_transfer',
         'value'
     ];
 
-    public function user(): BelongsTo
+    public function userRole(): BelongsTo
     {
         return $this->belongsTo(UserRole::class);
     }
 
-    public function branch_office(): BelongsTo
+    public function officeBranch(): BelongsTo
     {
         return $this->belongsTo(Office::class);
     }
